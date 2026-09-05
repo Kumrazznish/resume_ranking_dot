@@ -18,8 +18,35 @@ interface EnterpriseTemplate {
   skills: string[];
   description: string;
 }
-
 const ENTERPRISE_TEMPLATES: EnterpriseTemplate[] = [
+  {
+    id: 'fullstack-junior',
+    title: 'Junior Full Stack Engineer (Python & JavaScript)',
+    department: 'Software Engineering',
+    seniority: 'Entry / Junior (0-2 yrs)',
+    salary: '$75,000 - $95,000',
+    skills: ['Python', 'FastAPI', 'Node.js', 'React.js', 'Next.js', 'MySQL', 'MongoDB', 'RESTful API Design', 'Git', 'OOP'],
+    description: `Position: Junior Full Stack Engineer
+Department: Software Engineering
+Employment Type: Full-Time
+Experience Level: 0-2 Years (Entry / Associate)
+Salary Range: $75,000 - $95,000
+
+ROLE OVERVIEW:
+Join our product engineering squad building customer-facing web applications, REST APIs, and database architectures. Ideal for ambitious graduates and junior developers with strong foundations in Python, JavaScript/TypeScript, and relational databases.
+
+KEY RESPONSIBILITIES:
+• Build responsive web applications using React.js and Next.js.
+• Develop clean, secure RESTful APIs using Python (FastAPI/Django) and Node.js.
+• Manage and query relational and NoSQL databases (MySQL, PostgreSQL, MongoDB).
+• Collaborate with cross-functional teams using Git and agile workflows.
+
+TECHNICAL REQUIREMENTS:
+• Bachelor's degree in Computer Science, Information Technology, or equivalent.
+• Hands-on experience with Python (FastAPI, Flask, or Django) and JavaScript/TypeScript (React, Next.js, Node.js).
+• Good understanding of relational databases (MySQL, PostgreSQL) and RESTful API architecture.
+• Familiarity with Git, GitHub, Postman, and Object-Oriented Programming (OOP) principles.`
+  },
   {
     id: 'dotnet-backend-dev',
     title: '.NET / C# Backend Developer',
