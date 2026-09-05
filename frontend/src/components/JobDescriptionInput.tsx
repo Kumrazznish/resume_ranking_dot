@@ -21,6 +21,34 @@ interface EnterpriseTemplate {
 
 const ENTERPRISE_TEMPLATES: EnterpriseTemplate[] = [
   {
+    id: 'dotnet-backend-dev',
+    title: '.NET / C# Backend Developer',
+    department: 'Enterprise Platform Systems',
+    seniority: 'Mid / Senior (2+ yrs)',
+    salary: '$95,000 - $145,000',
+    skills: ['C#', '.NET Core', 'ASP.NET Core', 'Entity Framework Core', 'SQL / MySQL', 'RESTful APIs', 'Docker', 'Git'],
+    description: `Position: .NET / C# Backend Developer
+Department: Enterprise Platform Systems
+Employment Type: Full-Time
+Experience Level: 2+ Years
+Salary Range: $95,000 - $145,000
+
+ROLE OVERVIEW:
+We are seeking a skilled .NET / C# Developer to build high-performance backend REST APIs, scalable services, and robust database architectures with MySQL and Entity Framework Core.
+
+KEY RESPONSIBILITIES:
+• Develop and optimize ASP.NET Core Web APIs and backend services in C# (.NET 8/9).
+• Design relational database schemas, queries, and migrations using Entity Framework Core and MySQL.
+• Build clean, testable, maintainable code following Clean Architecture and SOLID principles.
+• Containerize backend services with Docker and participate in automated CI/CD pipelines.
+
+TECHNICAL REQUIREMENTS:
+• 2+ years of professional software development experience with C# and .NET Core / .NET 8+.
+• Strong hands-on experience building RESTful Web APIs with ASP.NET Core.
+• Proficiency with Entity Framework Core (EF Core) and relational databases (MySQL, PostgreSQL, or SQL Server).
+• Familiarity with Git, Docker, Unit Testing, and cloud deployments.`
+  },
+  {
     id: 'fullstack-sr',
     title: 'Senior Full Stack Engineer',
     department: 'Core Product Engineering',

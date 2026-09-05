@@ -172,7 +172,7 @@ export class FileProcessor {
     }
     
     // Additional validation for specific file types
-    if (fileName.endsWith('.pdf') && file.type !== 'application/pdf') {
+    if (fileName.endsWith('.pdf') && file.type && file.type !== 'application/pdf' && file.type !== 'application/x-pdf' && file.type !== 'application/octet-stream') {
       return { valid: false, error: 'PDF file type mismatch. Please ensure the file is a valid PDF.' };
     }
     

@@ -13,8 +13,8 @@ export class LocalResumeEvaluator {
     'TCP/IP', 'Network Security', 'Security Onion', 'PCAP', 'SOC Analyst',
 
     // .NET & Microsoft
-    '.NET Core', '.NET', 'C#', 'ASP.NET', 'Entity Framework', 'LINQ', 'WCF', 'WPF',
-    'SQL Server', 'T-SQL', 'SSIS', 'Azure DevOps', 'Microservices', 'Clean Architecture',
+    '.NET Core', '.NET', '.NET 8', '.NET 9', 'C#', 'ASP.NET', 'ASP.NET Core', 'Entity Framework', 'Entity Framework Core', 'EF Core', 'LINQ', 'WCF', 'WPF',
+    'SQL Server', 'T-SQL', 'SSIS', 'Azure DevOps', 'Microservices', 'Clean Architecture', 'REST API', 'RESTful APIs',
 
     // JavaScript / Frontend
     'React', 'TypeScript', 'JavaScript', 'Next.js', 'Vue.js', 'Angular', 'Redux', 'Tailwind CSS',

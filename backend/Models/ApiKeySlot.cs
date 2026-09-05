@@ -60,7 +60,7 @@ public class ApiKeySlot
 
     [MaxLength(100)]
     [JsonPropertyName("activeModel")]
-    public string ActiveModel { get; set; } = "gemini-2.0-flash";
+    public string ActiveModel { get; set; } = "gemini-3.6-flash";
 
     [JsonPropertyName("totalRequests")]
     public int TotalRequests { get; set; } = 0;

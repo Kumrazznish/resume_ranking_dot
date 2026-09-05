@@ -109,10 +109,19 @@ export class KeyPoolSynchronizer {
               cleanName = `Key ${addedCounter++}`;
             }
 
+            let cleanModel = s.activeModel;
+            let cleanHealth = s.healthScore;
+            if (!cleanModel || cleanModel.includes('1.5') || cleanModel.includes('2.0') || cleanModel.includes('2.5')) {
+              cleanModel = 'gemini-3.6-flash';
+              cleanHealth = 100;
+            }
+
             const cleanSlot: KeySlotData = {
               ...s,
               id: isEnv ? 'slot_primary_env' : s.id,
-              name: cleanName
+              name: cleanName,
+              activeModel: cleanModel,
+              healthScore: cleanHealth
             };
 
             if (!uniqueMap.has(keyId)) {
@@ -147,10 +156,10 @@ export class KeyPoolSynchronizer {
           isOccupied: false,
           occupiedBy: null,
           occupiedSince: null,
-          activeModel: 'gemini-2.5-flash',
+          activeModel: 'gemini-3.6-flash',
           modelStatuses: {
-            'gemini-2.5-flash': { status: 'HEALTHY', resetsAt: null, failureCount: 0 },
             'gemini-3.6-flash': { status: 'HEALTHY', resetsAt: null, failureCount: 0 },
+            'gemini-3.5-flash': { status: 'HEALTHY', resetsAt: null, failureCount: 0 },
             'gemini-3.7-flash': { status: 'HEALTHY', resetsAt: null, failureCount: 0 }
           },
           totalRequests: 0,
@@ -246,7 +255,7 @@ export class KeyPoolSynchronizer {
       keyName: selected.name,
       maskedKey: selected.maskedKey,
       user: userId,
-      model: selected.activeModel || 'gemini-2.5-flash',
+      model: selected.activeModel || 'gemini-3.6-flash',
       details: `[Round-Robin] ${selected.name} (${selected.maskedKey}) Locked (Queue #${selected.queuePosition})`
     });
 

@@ -18,7 +18,7 @@ export function LoadingOverlay({
   progress, 
   engineInfo, 
   keySlot, 
-  activeModel = 'gemini-2.5-flash' 
+  activeModel = 'gemini-3.6-flash' 
 }: LoadingOverlayProps) {
   if (!isVisible) return null;
 

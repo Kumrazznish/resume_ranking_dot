@@ -38,10 +38,15 @@ public class GeminiAiService : IGeminiAiService
         var rawKey = checkout.RawKey;
         var stopwatch = Stopwatch.StartNew();
 
-        var modelsToTry = new[] { slot.ActiveModel, "gemini-2.0-flash", "gemini-1.5-flash", "gemini-1.5-pro" }
-            .Where(m => !string.IsNullOrEmpty(m))
+        var modelsToTry = new[] { slot.ActiveModel, "gemini-3.6-flash", "gemini-3.5-flash", "gemini-flash-latest", "gemini-3.7-flash" }
+            .Where(m => !string.IsNullOrEmpty(m) && !m.Contains("1.5") && !m.Contains("2.0") && !m.Contains("2.5"))
             .Distinct()
             .ToList();
+
+        if (modelsToTry.Count == 0)
+        {
+            modelsToTry = new List<string> { "gemini-3.6-flash", "gemini-3.5-flash", "gemini-flash-latest" };
+        }
 
         string? lastError = null;
 

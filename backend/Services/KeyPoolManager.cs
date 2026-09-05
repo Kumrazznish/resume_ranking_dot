@@ -75,7 +75,7 @@ public class KeyPoolManager
                     HealthScore = 100,
                     RateLimit = 15,
                     SoftLimit = 12,
-                    ActiveModel = "gemini-2.0-flash"
+                    ActiveModel = "gemini-3.6-flash"
                 };
 
                 db.ApiKeys.Add(defaultSlot);
@@ -83,12 +83,29 @@ public class KeyPoolManager
                 keys.Add(defaultSlot);
             }
 
+            bool dbUpdated = false;
             foreach (var k in keys)
             {
+                // Auto-upgrade any legacy / deprecated models to the operational gemini-3.6-flash
+                if (string.IsNullOrWhiteSpace(k.ActiveModel) || 
+                    k.ActiveModel.Contains("1.5") || 
+                    k.ActiveModel.Contains("2.0") || 
+                    k.ActiveModel.Contains("2.5"))
+                {
+                    k.ActiveModel = "gemini-3.6-flash";
+                    k.HealthScore = 100;
+                    k.FailedRequests = 0;
+                    dbUpdated = true;
+                }
                 _inMemorySlots[k.Id] = k;
             }
 
-            AddEvent("SYSTEM", "POOL_INIT", $"Initialized {keys.Count} key slot(s) into active pool");
+            if (dbUpdated)
+            {
+                await db.SaveChangesAsync();
+            }
+
+            AddEvent("SYSTEM", "POOL_INIT", $"Initialized {keys.Count} key slot(s) into active pool (Active Model: gemini-3.6-flash)");
         }
         catch (Exception ex)
         {
@@ -248,7 +265,7 @@ public class KeyPoolManager
             Provider = provider,
             RateLimit = rateLimit > 0 ? rateLimit : 15,
             SoftLimit = softLimit > 0 ? softLimit : 12,
-            ActiveModel = "gemini-2.0-flash",
+            ActiveModel = "gemini-3.6-flash",
             HealthScore = 100,
             IsActive = true
         };

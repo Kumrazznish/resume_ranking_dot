@@ -332,10 +332,10 @@ export function AdminPage() {
       isOccupied: false,
       occupiedBy: null,
       occupiedSince: null,
-      activeModel: 'gemini-2.5-flash',
+      activeModel: 'gemini-3.6-flash',
       modelStatuses: {
-        'gemini-2.5-flash': { status: 'HEALTHY', resetsAt: null, failureCount: 0 },
         'gemini-3.6-flash': { status: 'HEALTHY', resetsAt: null, failureCount: 0 },
+        'gemini-3.5-flash': { status: 'HEALTHY', resetsAt: null, failureCount: 0 },
         'gemini-3.7-flash': { status: 'HEALTHY', resetsAt: null, failureCount: 0 }
       },
       totalRequests: 0,
@@ -771,7 +771,7 @@ export function AdminPage() {
 
                         <td className="py-3.5 text-center">
                           <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
-                            {slot.activeModel || 'gemini-2.5-flash'}
+                            {slot.activeModel || 'gemini-3.6-flash'}
                           </span>
                         </td>
 

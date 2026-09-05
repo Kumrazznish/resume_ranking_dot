@@ -33,7 +33,7 @@ export class GeminiService {
     const allocatedKeyName = checkout?.slot.name || 'Primary Gemini Key';
     const allocatedMask = checkout?.slot.maskedKey || 'AIzaSy...****';
     const targetApiKey = checkout?.rawKey || ENV_GEMINI_KEY || '';
-    const activeModel = checkout?.slot.activeModel || 'gemini-2.5-flash';
+    const activeModel = checkout?.slot.activeModel || 'gemini-3.6-flash';
 
     if (onProgressUpdate) {
       onProgressUpdate({
@@ -84,9 +84,13 @@ export class GeminiService {
         throw new Error('No valid Gemini API key found. Please add a key in the Admin Console (Multi-API Key Pool).');
       }
 
-      // Valid Google Gemini API model IDs
-      const modelFleet = ['gemini-2.0-flash', 'gemini-1.5-flash', 'gemini-1.5-pro', activeModel].filter(Boolean);
-      const uniqueModels = Array.from(new Set(modelFleet));
+      // Valid Google Gemini API model IDs - prioritizing operational Gemini 3.x models
+      const rawFleet = [activeModel, 'gemini-3.6-flash', 'gemini-3.5-flash', 'gemini-flash-latest', 'gemini-3.7-flash'];
+      const uniqueModels = Array.from(new Set(rawFleet))
+        .filter((m): m is string => Boolean(m) && !m.includes('1.5') && !m.includes('2.0') && !m.includes('2.5'));
+      if (uniqueModels.length === 0) {
+        uniqueModels.push('gemini-3.6-flash', 'gemini-3.5-flash', 'gemini-flash-latest');
+      }
 
       for (const model of uniqueModels) {
         try {
@@ -153,7 +157,7 @@ export class GeminiService {
   }
 
   private static createAnalysisPrompt(jobDescription: string, resumeTexts: string): string {
-    return `You are an expert ATS recruitment AI. Assess the following candidate resumes against the job description.
+    return `You are an expert ATS recruitment AI. Assess the following candidate resumes against the job description with high accuracy.
 
 JOB DESCRIPTION:
 ${jobDescription}
@@ -162,31 +166,36 @@ CANDIDATE RESUMES:
 ${resumeTexts}
 
 INSTRUCTIONS:
-Evaluate every candidate thoroughly and return a valid JSON array of objects.
-Do not include any explanation or intro text. Output ONLY the JSON array starting with [ and ending with ].
+1. Extract the candidate's real full name directly from their resume text (do NOT use placeholder names).
+2. Thoroughly analyze candidate experience, technical skills, certifications, and education against the specific requirements in the JOB DESCRIPTION.
+3. Calculate an accurate match_score (0 to 100) reflecting their actual suitability for the role.
+4. matched_skills must contain only skills that exist in BOTH the resume and the job description.
+5. missing_skills must contain key skills required by the job description that the candidate lacks.
+6. Provide specific, tailored strengths, weaknesses, executive summary, and 2-3 technical interview questions based on their actual background.
+7. Return ONLY a valid JSON array of candidate objects, one per resume provided, in the same order.
 
 JSON Structure:
 [
   {
-    "candidate_name": "Candidate Full Name",
+    "candidate_name": "Extracted Full Name",
     "match_score": 88,
     "is_relevant": true,
     "experience_level": "Senior",
     "experience_years": 6,
     "education": "B.S. in Computer Science",
-    "skills": ["React", "TypeScript", "Node.js", "Docker"],
-    "matched_skills": ["React", "TypeScript", "Node.js"],
+    "skills": ["C#", ".NET Core", "SQL", "Docker"],
+    "matched_skills": ["C#", ".NET Core", "SQL"],
     "missing_skills": ["Kubernetes"],
-    "summary": "2-3 sentence executive evaluation summary",
-    "recommendation": "Hire recommendation note",
-    "salary_range": "$140,000 - $170,000",
+    "summary": "2-3 sentence executive evaluation summary explaining role fit",
+    "recommendation": "Advance to technical interview round.",
+    "salary_range": "$120,000 - $145,000",
     "contact_info": {
       "email": "candidate@example.com",
       "phone": "(555) 000-0000"
     },
     "hire_probability": 0.88,
-    "strengths": ["Strong engineering fundamentals"],
-    "weaknesses": ["Minor gap in cloud architecture"],
+    "strengths": ["Demonstrated mastery in required backend stack"],
+    "weaknesses": ["Limited cloud deployment experience"],
     "interview_questions": [
       "How do you design scalable REST APIs?"
     ],
